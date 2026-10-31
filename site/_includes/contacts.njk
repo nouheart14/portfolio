@@ -1,0 +1,19 @@
+{#- Блок контактов (главная и страницы проектов) -#}
+<section class="section" id="contacts" aria-labelledby="contacts-title">
+  <div class="wrap">
+    <div class="cta" data-reveal>
+      <div class="cta__text">
+        <p class="eyebrow eyebrow--inv">Контакты</p>
+        <h2 class="cta__title" id="contacts-title">Обсудим вашу задачу</h2>
+        <p>Автоматизация процессов, интеграции с CRM и мессенджерами, ИИ-помощники, сайты и сервисы записи — расскажите, что нужно, и я предложу решение.</p>
+      </div>
+      <ul class="cta__list" role="list">
+        {%- if profile.links.telegram %}<li><a class="cta__item" href="{{ profile.links.telegram }}" target="_blank" rel="noopener"><span class="mono">Telegram</span><b>{{ profile.contacts.telegram }}</b></a></li>{% endif %}
+        {%- if profile.links.email %}<li><a class="cta__item" href="{{ profile.links.email }}"><span class="mono">Почта</span><b>{{ profile.contacts.email }}</b></a></li>{% endif %}
+        {%- if profile.links.phone %}<li><a class="cta__item" href="{{ profile.links.phone }}"><span class="mono">Телефон</span><b>{{ profile.contacts.phone }}</b></a></li>{% endif %}
+        {%- if profile.links.github %}<li><a class="cta__item" href="{{ profile.links.github }}" target="_blank" rel="noopener"><span class="mono">GitHub</span><b>{{ profile.links.github }}</b></a></li>{% endif %}
+        <li><a class="cta__item cta__item--pdf" href="/files/Andrey-Bateev-portfolio.pdf" download><span class="mono">PDF</span><b>Скачать резюме <span class="arr" aria-hidden="true">↓</span></b></a></li>
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,106 @@
+---
+layout: base.njk
+pageKind: home
+title: Андрей Батеев — разработчик, автоматизация бизнеса с ИИ
+description: Веб-приложения, сайты, Telegram-боты и ИИ-помощники для бизнеса. Реальные проекты для заказчиков, интеграции с Битрикс24.
+---
+{%- set featured = projects[0] -%}
+
+<section class="hero" aria-labelledby="hero-title" data-hero>
+  <div class="wrap hero__in">
+    <div class="hero__text">
+      <p class="eyebrow load" style="--i:0"><span class="dot" aria-hidden="true"></span>Открыт к проектам и работе</p>
+      {#- Имя по словам: каждое слово появляется со своей задержкой -#}
+      <h1 class="hero__title" id="hero-title">{% for w in profile.name.split(' ') %}<span class="w" style="--i:{{ loop.index0 }}">{{ w }}</span>{% if not loop.last %} {% endif %}{% endfor %}</h1>
+      <p class="hero__role load" style="--i:2">{{ profile.title }}</p>
+      <p class="hero__lead load" style="--i:3">{{ profile.summary }}</p>
+      <div class="hero__actions load" style="--i:4">
+        {%- if profile.links.telegram %}<a class="btn" href="{{ profile.links.telegram }}" target="_blank" rel="noopener" data-magnet>Написать в Telegram</a>{% endif %}
+        <a class="btn btn--ghost" href="/files/Andrey-Bateev-portfolio.pdf" download data-magnet>Резюме в PDF</a>
+      </div>
+    </div>
+    <figure class="hero__photo load" style="--i:2" data-parallax>
+      {% img "me", profile.name, "(min-width: 900px) 380px, 80vw", "", "eager" %}
+    </figure>
+  </div>
+  <div class="wrap">
+    <ul class="numbers" role="list">
+      {%- for k in profile.numbers %}
+      <li data-reveal style="--d:{{ loop.index0 * 80 }}ms"><b{% if k.value | int == k.value %} data-count="{{ k.value }}"{% endif %}>{{ k.value }}</b><span>{{ k.label }}</span></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="projects" aria-labelledby="projects-title">
+  <div class="wrap">
+    <div class="head" data-reveal>
+      <p class="eyebrow">Проекты</p>
+      <h2 class="head__title" id="projects-title">Что я сделал</h2>
+      <p class="head__lead">Реальные проекты для заказчиков и собственные продукты: от автоматизации компании на базе CRM до сайтов, ботов и видеоконвейера.</p>
+    </div>
+
+    {#- Главный проект — крупной карточкой -#}
+    <div data-reveal>
+      <article class="featured" data-tilt>
+        <div class="featured__text">
+          <div class="meta-line"><span class="mono">{{ featured.n }} · главный проект</span><span class="chip chip--{{ featured.statusKind }}">{{ featured.statusText }}</span></div>
+          <h3 class="featured__title" data-vt style="--vt: title-{{ featured.slug }}"><a href="/projects/{{ featured.slug }}/">{{ featured.title }}</a></h3>
+          <p class="featured__lead">{{ featured.summary }}</p>
+          <ul class="metrics metrics--row" role="list">
+            {%- for m in featured.metrics %}<li><b>{{ m.value }}</b><span>{{ m.label }}</span></li>{% endfor %}
+          </ul>
+          <a class="link" href="/projects/{{ featured.slug }}/">Подробнее о проекте <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+        <a class="featured__media" href="/projects/{{ featured.slug }}/" tabindex="-1" aria-hidden="true" data-vt style="--vt: shot-{{ featured.slug }}">
+          <span class="wipe" data-reveal="wipe">{% img featured.cover.file, featured.cover.caption, "(min-width: 1000px) 640px, 92vw", "", "eager" %}</span>
+        </a>
+      </article>
+    </div>
+
+    <div class="cards">
+      {%- for p in projects.slice(1) %}
+      <div class="cards__cell" data-reveal style="--d:{{ (loop.index0 % 3) * 90 }}ms">
+        <article class="card" data-tilt>
+          <div class="card__media{% if p.cover.kind == 'diagram' %} card__media--contain{% endif %}" data-vt style="--vt: shot-{{ p.slug }}">
+            {% img p.cover.file, p.cover.caption, "(min-width: 1180px) 380px, (min-width: 760px) 46vw, 92vw" %}
+          </div>
+          <div class="card__body">
+            <div class="meta-line"><span class="mono">{{ p.n }} · {{ p.category }}</span><span class="chip chip--{{ p.statusKind }}">{{ p.statusText }}</span></div>
+            <h3 class="card__title" data-vt style="--vt: title-{{ p.slug }}"><a href="/projects/{{ p.slug }}/">{{ p.title }}</a></h3>
+            <p class="card__text">{{ p.tagline }}</p>
+            <ul class="tags" role="list">{% for t in p.tags | limit(5) %}<li>{{ t }}</li>{% endfor %}</ul>
+          </div>
+        </article>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="skills" aria-labelledby="skills-title">
+  <div class="wrap">
+    <div class="head" data-reveal>
+      <p class="eyebrow">Навыки</p>
+      <h2 class="head__title" id="skills-title">Технологии из реальных проектов</h2>
+    </div>
+    <div class="skills">
+      {%- for g in profile.skills %}
+      <div class="skill" data-reveal style="--d:{{ (loop.index0 % 3) * 80 }}ms">
+        <h3 class="skill__title">{{ g.name }}</h3>
+        <ul class="tags" role="list">{% for t in g.items %}<li>{{ t }}</li>{% endfor %}</ul>
+      </div>
+      {%- endfor %}
+    </div>
+    {%- if profile.experience.length %}
+    <div class="exp" data-reveal>
+      <h3 class="exp__title">Опыт</h3>
+      {%- for e in profile.experience %}
+      <div class="exp__item"><b>{{ e.title }}</b><p>{{ e.text }}</p></div>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+  </div>
+</section>
+
+{% include "contacts.njk" %}

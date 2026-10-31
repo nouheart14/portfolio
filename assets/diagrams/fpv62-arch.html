@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<style>
+@font-face { font-family: "Manrope"; src: url("../fonts/manrope-cyrillic.woff2") format("woff2"); font-weight: 200 800; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Manrope"; src: url("../fonts/manrope-latin.woff2") format("woff2"); font-weight: 200 800; unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF; }
+* { box-sizing: border-box; margin: 0; }
+body { width: 1100px; font-family: "Manrope", sans-serif; background: linear-gradient(135deg, #eaf6f3, #f6fbfa); padding: 22px 26px 24px; color: #14211f; }
+h1 { font-size: 20px; font-weight: 800; color: #0e4d48; }
+h1 span { font-weight: 600; color: #51625f; font-size: 14px; margin-left: 10px; }
+.grid { display: grid; grid-template-columns: 215px 28px 1fr 28px 250px; align-items: stretch; margin-top: 16px; }
+.col h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: #1f9d8a; font-weight: 800; margin-bottom: 7px; }
+.box { background: #fff; border: 2px solid #b9cfcb; border-radius: 11px; padding: 5px 11px; font-size: 13.5px; line-height: 1.25; margin-bottom: 5px; }
+.box b { display: block; color: #0e4d48; font-size: 14.5px; }
+.box i { display: block; font-style: normal; color: #51625f; font-size: 12px; margin-top: 1px; }
+.arr { align-self: center; text-align: center; font-size: 22px; font-weight: 800; color: #1f9d8a; }
+.core { border: 3px solid #0e4d48; border-radius: 16px; padding: 12px 14px 8px; background: #f2faf8; }
+.core .tag { font-size: 12px; font-weight: 800; color: #0e4d48; margin-bottom: 8px; }
+.core .row { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 8px; }
+.core .box.dark { background: #0e4d48; border-color: #0e4d48; color: #fff; }
+.core .box.dark b { color: #9be0d3; } .core .box.dark i { color: #cfe9e4; }
+.data { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 1px; }
+.data .box { margin: 0; text-align: center; padding: 6px 4px; font-size: 12.5px; background: #e6f3ef; border-color: #cfe3de; }
+.data .box b { font-size: 13px; }
+</style></head><body>
+<h1>Архитектура системы<span>9 сервисов Docker Compose, 10+ интеграций</span></h1>
+<div class="grid">
+  <div class="col">
+    <h2>Пользователи</h2>
+    <div class="box"><b>Сотрудники</b>права по ролям и направлениям<i>браузер · Telegram</i></div>
+    <div class="box"><b>Директор</b>отчёты, управление ИИ-агентом<i>в том числе голосом</i></div>
+    <div class="box"><b>Подписчики канала</b>бот мероприятий<i>регистрация, опросы</i></div>
+  </div>
+  <div class="arr">⇄</div>
+  <div class="col">
+    <h2>Control Center · Caddy (HTTPS)</h2>
+    <div class="core">
+      <div class="row">
+        <div class="box"><b>Frontend</b>Next.js 16 · React 19<i>30 экранов</i></div>
+        <div class="box dark"><b>Backend</b>FastAPI · 231 эндпоинт<i>фоновые задачи · RBAC · аудит · ИИ-агент</i></div>
+        <div class="box"><b>СДЭК-мост</b>отдельный сервис<i>статусы → сделки</i></div>
+      </div>
+      <div class="data">
+        <div class="box"><b>PostgreSQL 18</b>76 моделей</div>
+        <div class="box"><b>Redis</b>кеш</div>
+        <div class="box"><b>MinIO</b>документы (S3)</div>
+        <div class="box"><b>Mosquitto</b>MQTT</div>
+        <div class="box"><b>Xray</b>прокси</div>
+      </div>
+    </div>
+  </div>
+  <div class="arr">⇄</div>
+  <div class="col">
+    <h2>Внешние системы</h2>
+    <div class="box"><b>Битрикс24</b>CRM · звонки · чаты<i>двусторонняя синхронизация</i></div>
+    <div class="box"><b>Telegram</b>два бота<i>ИИ-агент · мероприятия</i></div>
+    <div class="box"><b>Yandex AI Studio</b>YandexGPT · SpeechKit</div>
+    <div class="box"><b>Банк · СДЭК · Tilda</b>операции · статусы · заказы сайта</div>
+    <div class="box"><b>ESP32 по MQTT</b>кассы · замки · температура</div>
+  </div>
+</div>
+</body></html>

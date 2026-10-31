@@ -1,0 +1,16 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "description": "Портфолио: данные проектов → PDF-резюме и сайт-визитка на 11ty",
+  "type": "module",
+  "scripts": {
+    "pdf": "node tools/build-pdf.mjs",
+    "site:images": "py tools/site-images.py",
+    "site:build": "py tools/site-images.py && eleventy",
+    "site": "node tools/site-server.mjs"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.7",
+    "playwright-core": "1.64.1"
+  }
+}

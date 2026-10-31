@@ -1,0 +1,88 @@
+---
+layout: base.njk
+pageKind: project
+pagination:
+  data: projects
+  size: 1
+  alias: p
+permalink: "/projects/{{ p.slug }}/"
+eleventyComputed:
+  title: "{{ p.title }} — {{ profile.name }}"
+  description: "{{ p.tagline }}"
+---
+{%- set prev = projects[pagination.pageNumber - 1] if pagination.pageNumber > 0 else null -%}
+{%- set next = projects[pagination.pageNumber + 1] if pagination.pageNumber < projects.length - 1 else null -%}
+
+<article class="project">
+  <header class="project__head">
+    <div class="wrap">
+      <a class="back" href="/#projects"><span class="arr" aria-hidden="true">←</span> Все проекты</a>
+      <div class="meta-line"><span class="mono">Проект {{ p.n }} · {{ p.category }}</span><span class="chip chip--{{ p.statusKind }}">{{ p.statusText }}</span></div>
+      <h1 class="project__title" data-vt style="--vt: title-{{ p.slug }}">{{ p.title }}</h1>
+      <p class="project__tagline">{{ p.tagline }}</p>
+      <dl class="facts">
+        {%- if p.role %}<div data-reveal><dt>Роль</dt><dd>{{ p.role }}</dd></div>{% endif %}
+        <div data-reveal style="--d:60ms"><dt>Заказчик</dt><dd>{{ p.client }}</dd></div>
+        <div data-reveal style="--d:120ms"><dt>Статус</dt><dd>{{ p.status }}</dd></div>
+        {%- if p.link %}<div data-reveal style="--d:180ms"><dt>Ссылка</dt><dd><a href="{{ p.link.url }}" target="_blank" rel="noopener">{{ p.link.text }}</a></dd></div>{% endif %}
+      </dl>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="gallery">
+      {%- for s in p.shots %}
+      <figure class="gallery__item gallery__item--{{ s.kind }}"{% if not loop.first %} data-reveal style="--d:{{ loop.index0 * 90 }}ms"{% endif %}>
+        <div class="gallery__img"{% if loop.first %} data-vt style="--vt: shot-{{ p.slug }}"{% endif %}>
+          {% img s.file, s.caption, ("(min-width: 1000px) 300px, 60vw" if s.kind == 'mobile' else "(min-width: 1200px) 1100px, 92vw"), "", ("eager" if loop.first else "lazy") %}
+        </div>
+        <figcaption>{{ s.caption }}</figcaption>
+      </figure>
+      {%- endfor %}
+    </div>
+
+    <div class="project__body">
+      <div class="project__main">
+        <p class="project__lead" data-reveal>{{ p.summary }}</p>
+        <h2 class="h2" data-reveal>Что сделано</h2>
+        <ul class="bullets">{% for h in p.highlights %}<li data-reveal style="--d:{{ loop.index0 * 50 }}ms">{{ h }}</li>{% endfor %}</ul>
+      </div>
+      <aside class="project__side" aria-label="Цифры и стек" data-reveal>
+        <ul class="metrics" role="list">{% for m in p.metrics %}<li><b>{{ m.value }}</b><span>{{ m.label }}</span></li>{% endfor %}</ul>
+        <h2 class="h3">Стек и технологии</h2>
+        {%- for g in p.stack %}
+        <div class="stack"><span class="mono">{{ g.name }}</span><ul class="tags" role="list">{% for t in g.items %}<li>{{ t }}</li>{% endfor %}</ul></div>
+        {%- endfor %}
+        {%- if p.footnote %}<p class="note">{{ p.footnote }}</p>{% endif %}
+      </aside>
+    </div>
+
+    {%- if p.extra %}
+    <section class="extra" aria-labelledby="extra-title">
+      <h2 class="h2" id="extra-title" data-reveal>{{ p.extra.title }}</h2>
+      {%- if p.extra.lead %}<p class="extra__lead" data-reveal>{{ p.extra.lead }}</p>{% endif %}
+      {%- if p.extra.diagram %}
+      <figure class="gallery__item gallery__item--diagram">
+        <div class="gallery__img" data-reveal="wipe">{% img p.extra.diagram, p.extra.diagramCaption, "(min-width: 1200px) 1100px, 92vw" %}</div>
+        <figcaption>{{ p.extra.diagramCaption }}</figcaption>
+      </figure>
+      {%- endif %}
+      <div class="extra__cols">
+        {%- for b in p.extra.blocks %}
+        <div data-reveal style="--d:{{ loop.index0 * 100 }}ms">
+          <h3 class="h3">{{ b.title }}</h3>
+          <dl class="rows">{% for r in b.rows %}<div><dt>{{ r.name }}</dt><dd>{{ r.text }}</dd></div>{% endfor %}</dl>
+        </div>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+
+    <nav class="pager" aria-label="Другие проекты">
+      {%- if prev %}<a class="pager__link pager__link--prev" href="/projects/{{ prev.slug }}/" data-dir="prev" rel="prev"><span class="mono"><span class="arr" aria-hidden="true">←</span> Предыдущий</span><b>{{ prev.title }}</b></a>{% else %}<span class="pager__stub"></span>{% endif %}
+      {%- if next %}<a class="pager__link pager__link--next" href="/projects/{{ next.slug }}/" data-dir="next" rel="next"><span class="mono">Следующий <span class="arr" aria-hidden="true">→</span></span><b>{{ next.title }}</b></a>{% endif %}
+    </nav>
+  </div>
+</article>
+
+{% include "contacts.njk" %}

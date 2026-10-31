@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{ title or (profile.name + ' — ' + profile.title) }}</title>
+  <meta name="description" content="{{ description or profile.summary }}">
+  {%- if noindex %}
+  <meta name="robots" content="noindex">
+  {%- else %}
+  <link rel="canonical" href="{{ profile.url }}{{ page.url }}">
+  {%- endif %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ profile.name }}">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:url" content="{{ profile.url }}{{ page.url }}">
+  <meta property="og:title" content="{{ title or (profile.name + ' — ' + profile.title) }}">
+  <meta property="og:description" content="{{ description or profile.summary }}">
+  <meta property="og:image" content="{{ profile.url }}/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+  {#- Не показывать новую страницу при переходе, пока не разобран основной контент (для плавного перехода) -#}
+  <link rel="expect" href="#main" blocking="render">
+  {#- Должно выполниться до первой отрисовки: тема, класс js и направление перехода между страницами -#}
+  <script>
+  (function () {
+    var d = document.documentElement;
+    d.classList.add('js');
+    try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') d.dataset.theme = t; } catch (e) {}
+    function dir() { try { return sessionStorage.getItem('vt-dir') || ''; } catch (e) { return ''; } }
+    // Кнопки «Предыдущий / Следующий» помечены data-dir — запоминаем направление перед уходом со страницы
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (a) { try { sessionStorage.setItem('vt-dir', a.dataset.dir || ''); } catch (_) {} }
+    }, true);
+    // Листание проектов: страница уезжает вбок, общие элементы (картинка, заголовок) не «перетекают»
+    addEventListener('pageswap', function (e) {
+      if (!e.viewTransition) return;
+      var x = dir();
+      if (x) { e.viewTransition.types.add(x); d.classList.add('no-vt'); }
+    });
+    addEventListener('pagereveal', function (e) {
+      var x = dir();
+      try { sessionStorage.removeItem('vt-dir'); } catch (_) {}
+      if (!e.viewTransition || !x) return;
+      e.viewTransition.types.add(x);
+      d.classList.add('no-vt');
+      e.viewTransition.finished.finally(function () { d.classList.remove('no-vt'); });
+    });
+    addEventListener('pageshow', function (e) { if (e.persisted) d.classList.remove('no-vt'); });
+  })();
+  </script>
+  <script type="module" src="/js/site.js"></script>
+</head>
+<body{% if pageKind %} data-page="{{ pageKind }}"{% endif %}>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="header" data-header>
+  <div class="wrap header__in">
+    <a class="brand" href="/" aria-label="{{ profile.name }} — на главную">
+      <span class="brand__mark" aria-hidden="true">АБ</span>
+      <span class="brand__name">{{ profile.name }}</span>
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="/#projects" data-nav="projects">Проекты</a>
+      <a class="nav__hide-sm" href="/#skills" data-nav="skills">Навыки</a>
+      <a href="/#contacts" data-nav="contacts">Контакты</a>
+    </nav>
+    <button class="theme" type="button" data-theme-toggle data-magnet aria-label="Переключить тему">
+      <svg class="theme__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+      <svg class="theme__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </div>
+  {%- if pageKind == 'project' %}<div class="progress" aria-hidden="true"><span data-progress></span></div>{% endif %}
+</header>
+
+<main id="main">
+{{ content | safe }}
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <span>© 2026 {{ profile.name }}</span>
+    <span class="mono">Сайт собран на 11ty · без фреймворков</span>
+  </div>
+</footer>
+{#- Появление при прокрутке: обычный (не отложенный) скрипт, чтобы видимые сразу блоки не мигали -#}
+<script src="/js/reveal.js"></script>
+</body>
+</html>

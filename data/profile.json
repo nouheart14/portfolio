@@ -1,0 +1,26 @@
+{
+  "_comment": "null = данных нет, в PDF покажется жёлтая пометка TODO. Контакты Андрей добавит сам.",
+  "name": "Андрей Батеев",
+  "title": "Разработчик: веб-приложения, сайты, автоматизация бизнеса с помощью ИИ",
+  "summary": "Студент 4 курса, программист. Занимаюсь автоматизацией бизнеса с помощью ИИ: ИИ-помощники, Telegram-боты, интеграции с Битрикс24. Довожу продукты от идеи до развёртывания: SaaS-приложения, сайты, сервисы записи. Работаю с реальными заказчиками: ТЗ, сроки, правки, публикация на хостинге.",
+  "photo": "me.jpg",
+  "keyNumbers": [ { "value": "217", "label": "автотестов в Plan SGX" }, { "value": "5", "label": "заказчиков, с кем работаю и работал" } ],
+  "contacts": { "email": null, "phone": null, "telegram": "@nouheart", "github": null, "site": "bateevdev.ru" },
+  "experience": [
+    {
+      "title": "Единственный разработчик системы автоматизации бизнеса на базе Битрикс24",
+      "text": "Control Center: заявки, клиенты, задачи, склад и магазин, сервис, финансы и аналитика, ИИ-агент в Telegram, разбор тендерной документации. Python (FastAPI), Next.js, PostgreSQL, Docker Compose; в боевой эксплуатации."
+    }
+  ],
+  "aiTools": { "show": false, "text": "Разрабатываю с ИИ-ассистентом (Claude Code): архитектура, код-ревью, тесты и проверка результата — на мне." },
+  "skills": [
+    { "name": "Языки", "items": ["TypeScript", "JavaScript (ES-модули)", "Python", "SQL", "PHP", "HTML5 / CSS3"] },
+    { "name": "Frontend", "items": ["React 19", "Next.js", "Vite", "11ty", "TanStack Query", "PWA / Workbox", "адаптивная вёрстка", "доступность (WCAG)"] },
+    { "name": "Backend и данные", "items": ["FastAPI", "PostgreSQL (RLS, миграции)", "Supabase", "Deno Edge Functions", "Redis, MinIO (S3)", "JWT, RBAC, аудит"] },
+    { "name": "ИИ и автоматизация", "items": ["ИИ-помощники с вызовом функций (tool calling)", "Yandex AI Studio / YandexGPT", "лимиты расходов и защита данных", "Telegram-боты", "разбор рекламы скриптами"] },
+    { "name": "Интеграции", "items": ["Telegram и MAX боты", "Битрикс24 REST и события", "Yandex AI Studio / SpeechKit", "банковский API", "СДЭК, Tilda", "MQTT / ESP32", "Яндекс Метрика и Директ", "Web Push"] },
+    { "name": "Инфраструктура", "items": ["Docker Compose", "Caddy + HTTPS", "VPS (Ubuntu)", "Git", "деплой статики на хостинг"] },
+    { "name": "Качество", "items": ["Vitest", "Playwright (e2e)", "интеграционные тесты", "проверка ссылок и доступности"] },
+    { "name": "Медиа и автоматизация", "items": ["ffmpeg (NVENC)", "librosa", "demucs", "Pillow", "DaVinci Resolve (FCPXML)"] }
+  ]
+}

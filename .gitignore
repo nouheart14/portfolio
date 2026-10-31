@@ -1,0 +1,9 @@
+﻿node_modules/
+out/
+.env
+.env.*
+!.env.example
+Thumbs.db
+_site/
+site/img/
+site/_data/images.json
